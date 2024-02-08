@@ -21,7 +21,7 @@ public class SortGUI {
 	public static double rmergeTime = 0.0;
 	//a variable that holds the amount of time for the iterative merge sort takes to execute
 	public static double imergeTime = 0.0;
-	//a variable that holds the amount of time for the iterative merge sort takes to execute
+	//a variable that holds the amount of time the insertion sort takes to execute
 	public static double insertTime = 0.0;
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
