@@ -110,9 +110,9 @@ public class SortShow extends JPanel {
 			//getting the date and time when the recursive merge sort starts
 			Calendar start = Calendar.getInstance();
 			//assigning the size for the tempArray below
-
+			tempArray = new int[lines_lengths.length];
 			//You need to complete this part.
-
+			R_MergeSort(0, lines_lengths.length - 1);
 
 			Calendar end = Calendar.getInstance();
 			//getting the time it took for the iterative merge sort to execute
@@ -128,9 +128,12 @@ public class SortShow extends JPanel {
 				//You need to complete this part.
 				int middle = (first + last) / 2;
 				R_MergeSort(first, middle);
-				R_MergeSort(middle, last);
+				R_MergeSort(middle + 1, last);
 
-				R_Merge(first, middle, last);
+				if (lines_lengths[middle] >= lines_lengths[middle + 1]) {
+					R_Merge(first, middle, last);
+				}
+
 				//Causing a delay for 10ms
 				delay(10); 
 			}
@@ -142,7 +145,47 @@ public class SortShow extends JPanel {
 
 			//You need to complete this part.
 
-				
+			//Index into each respective subarray
+			int firstHalfIndex = first;
+			int secondHalfIndex = mid + 1;
+
+
+			//Start by merging, we assume the two halves of the array we receive are sorted
+			int currentIndex = first; //Need a reusable index variable so we know how far we are in the sorted array
+			for (; (firstHalfIndex <= mid) && (secondHalfIndex <= last); currentIndex++) { //assume first and last are 0 indexed
+
+				if (lines_lengths[firstHalfIndex] < lines_lengths[secondHalfIndex]) {
+					tempArray[currentIndex] = lines_lengths[firstHalfIndex];
+					firstHalfIndex++;
+				}
+
+				else {
+					tempArray[currentIndex] = lines_lengths[secondHalfIndex];
+					secondHalfIndex++;
+				}
+			}
+
+
+			//Need to clear out anything left, if our array lengths weren't equal there will be one array that still has elements
+			if (firstHalfIndex > mid) { //if we hit the end of the first half, then we need to clear the other end of the array
+				for (; secondHalfIndex <= last; currentIndex++, secondHalfIndex++) {
+					tempArray[currentIndex] = lines_lengths[secondHalfIndex];
+				}
+			}
+			else { //otherwise, we ran out the second half first and need to finish copying the first half
+				for (; firstHalfIndex <= mid; currentIndex++, firstHalfIndex++) {
+					tempArray[currentIndex] = lines_lengths[firstHalfIndex];
+				}
+			}
+
+			//copy back
+			for (currentIndex = first; currentIndex <= last; currentIndex++) {
+				lines_lengths[currentIndex] = tempArray[currentIndex];
+			}
+
+			//redrawing the lines_lengths
+			paintComponent(this.getGraphics());
+
 		}
 		
 		//
