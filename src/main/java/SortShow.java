@@ -407,6 +407,9 @@ public class SortShow extends JPanel {
 	        	Thread.currentThread().interrupt();
 	        }
 		}
-		
+
+	public void R_Qsort() {
+
 	}
+}
 
