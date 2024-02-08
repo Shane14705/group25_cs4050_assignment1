@@ -21,12 +21,16 @@ public class SortGUI {
 	public static double rmergeTime = 0.0;
 	//a variable that holds the amount of time for the iterative merge sort takes to execute
 	public static double imergeTime = 0.0;
+	//a variable that holds the amount of time for the iterative merge sort takes to execute
+	public static double insertTime = 0.0;
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
 	//Boolean variable that is made to keep track whether or not the recursive merge sort has already been used
 	public boolean Recersive_Merge_Done = false;
 	//Boolean variable that is made to keep track whether or not the iterative merge sort has already been used
 	public boolean Iterative_Merge_Done = false;
+	//Boolean variable that is made to keep track whether or not the insertion sort has already been used
+	public boolean Insertion_Done = false;
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
 	
@@ -56,17 +60,22 @@ public class SortGUI {
 		JRadioButton rmerge = new JRadioButton("Merge Recursive");
 		//making a iterative merge button with a text "Selection" on it
 		JRadioButton imerge = new JRadioButton("Merge Iterative");
+		//making an insertion button with text "Insertion" on it
+		JRadioButton insertion = new JRadioButton("Insertion");
 		//making a reset button with a text "Selection" on it
 		JRadioButton reset = new JRadioButton("Reset");
-		//A label that displays the time it took for the Selection sort took to execute 
+		//A label that displays the time it took for the Selection sort took to execute
 		JLabel selection_time_label = new JLabel("Selection Time");
-		JLabel selection_time_taken = new JLabel(""); 
-		//A label that displays the time it took for the recursive merge sort took to execute 
+		JLabel selection_time_taken = new JLabel("");
+		//A label that displays the time it took for the recursive merge sort took to execute
 		JLabel rmerge_time_label = new JLabel("Merge-Rec Time");
 		JLabel rmerge_time_taken = new JLabel("");
 		//A label that displays the time it took for the iterative merge sort took to execute
 		JLabel imerge_time_label = new JLabel("Merge-Ita Time");
 		JLabel imerge_time_taken = new JLabel("");
+		//A label that displays the time it took for the insertion sort to execute
+		JLabel insert_time_label = new JLabel("Insertion Time");
+		JLabel insert_time_taken = new JLabel("");
 	
 		//the default constructor for the class MyScreen
 		public MyScreen() {

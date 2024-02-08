@@ -187,7 +187,61 @@ public class SortShow extends JPanel {
 			paintComponent(this.getGraphics());
 
 		}
-		
+
+	public void InsertionSort()
+	{
+		//Start the timer
+		Calendar start = Calendar.getInstance();
+
+		//Run the recursive InsertionSort method
+		InsertionSort(0, lines_lengths.length-1);
+
+		//End timer
+		Calendar end = Calendar.getInstance();
+		//Computing the time it took to run insertion sort
+		//Subtract the start time from the end time
+		SortGUI.insertTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	//recursive insertion sort method
+	public void InsertionSort(int first, int last)
+	{
+		if(first < last)
+		{
+			//sort all but the last element
+			InsertionSort(first, last-1);
+
+			//insert the last element in sorted order
+			InsertInOrder(lines_lengths[last], first, last-1);
+
+			//add a delay of 10 ms
+			delay(10);
+		}
+	}
+
+	//Function used in insertion sort to insert an element into the sorted array
+	public void InsertInOrder(int element, int start, int end)
+	{
+		if(element >= lines_lengths[end])
+		{
+			lines_lengths[end+1] = element;
+		}
+		else
+		{
+			if(start < end)
+			{
+				lines_lengths[end+1] = lines_lengths[end];
+				InsertInOrder(element, start, end-1);
+			}
+			else
+			{
+				lines_lengths[end+1] = lines_lengths[end];
+				lines_lengths[end] = element;
+			}
+		}
+		//Redrawing the lines
+		paintComponent(this.getGraphics());
+	}
 		//
 
 	//////////////////////////////////////////////////////////////////////////////////////////
