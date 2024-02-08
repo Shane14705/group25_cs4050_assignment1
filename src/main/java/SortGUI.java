@@ -23,6 +23,9 @@ public class SortGUI {
 	public static double imergeTime = 0.0;
 	//a variable that holds the amount of time the insertion sort takes to execute
 	public static double insertTime = 0.0;
+
+	public static double qsortTime = 0.0;
+
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
 	//Boolean variable that is made to keep track whether or not the recursive merge sort has already been used
@@ -31,6 +34,9 @@ public class SortGUI {
 	public boolean Iterative_Merge_Done = false;
 	//Boolean variable that is made to keep track whether or not the insertion sort has already been used
 	public boolean Insertion_Done = false;
+
+	public boolean Recursive_Quick_Done = false;
+
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
 	
@@ -60,6 +66,9 @@ public class SortGUI {
 		JRadioButton rmerge = new JRadioButton("Merge Recursive");
 		//making a iterative merge button with a text "Selection" on it
 		JRadioButton imerge = new JRadioButton("Merge Iterative");
+
+		JRadioButton qsort = new JRadioButton("Quicksort Recursive");
+
 		//making an insertion button with text "Insertion" on it
 		JRadioButton insertion = new JRadioButton("Insertion");
 		//making a reset button with a text "Selection" on it
@@ -76,6 +85,9 @@ public class SortGUI {
 		//A label that displays the time it took for the insertion sort to execute
 		JLabel insert_time_label = new JLabel("Insertion Time");
 		JLabel insert_time_taken = new JLabel("");
+
+		JLabel qsort_time_label = new JLabel("Merge-Ita Time");
+		JLabel qsort_time_taken = new JLabel("");
 	
 		//the default constructor for the class MyScreen
 		public MyScreen() {
@@ -86,18 +98,24 @@ public class SortGUI {
 			rmerge_time_taken.setForeground(Color.RED);
 			//The time displayed for iterative merge sort will be the colour red
 			imerge_time_taken.setForeground(Color.RED);
+
+			qsort_time_taken.setForeground(Color.RED);
+
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
 			//The recursive merge button text will be the colour blue
 			rmerge.setForeground(Color.BLUE);
 			//The iterative merge button text will be the colour blue
 			imerge.setForeground(Color.BLUE);
+
+			qsort.setForeground(Color.BLUE);
+
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
 			//setting the font of scramble button
 			scramble_button.setFont(new Font("Arial", Font.BOLD, 15));
 			//A Panel to hold the radio_button_selection and set the GridLayout
-			JPanel radio_button_selection_Panel = new JPanel(new GridLayout(4, 1, 3, 3));
+			JPanel radio_button_selection_Panel = new JPanel(new GridLayout(5, 1, 3, 3));
 
 			//Adding the selection button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(selection);
@@ -105,13 +123,16 @@ public class SortGUI {
 			radio_button_selection_Panel.add(rmerge);
 			//Adding the iterative merge button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(imerge);
+
+			radio_button_selection_Panel.add(qsort);
+
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
 			//giving the radio_button_selection_Panel a border with a title 
 			radio_button_selection_Panel.setBorder(new javax.swing.border.TitledBorder("Sort Algorithms"));
 
 			//A Panel to hold the time_Panel and set the GridLayout
-			JPanel time_Panel = new JPanel(new GridLayout(6, 1, 3, 3));
+			JPanel time_Panel = new JPanel(new GridLayout(8, 1, 3, 3));
 			//Adding the selection_time_label to the time_Panel
 			time_Panel.add(selection_time_label);
 			//Adding the selection_time_taken to the time_Panel
@@ -124,6 +145,10 @@ public class SortGUI {
 			time_Panel.add(imerge_time_label);
 			//Adding the imerge_time_taken to the time_Panel
 			time_Panel.add(imerge_time_taken);
+
+			time_Panel.add(qsort_time_label);
+			time_Panel.add(qsort_time_taken);
+
 
 			//A Panel to hold the buttons_area_Panel and set the GridLayout
 			//This buttons_area_Panel will hold scrambleButton, radio_button_selection and the time_Panel
@@ -140,7 +165,7 @@ public class SortGUI {
 			//placing the sortArea object in the center of the window
 			add(sortArea, BorderLayout.CENTER);
 			//setting all booleans to false
-			Set_Available_Chooses(false, false, false, false);
+			Set_Available_Chooses(false, false, false, false, false);
 
 			//The following code is for creating a listener for each GUI element 
 
@@ -154,7 +179,7 @@ public class SortGUI {
 					//Since it has already been clicked, it will no longer be enabled
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
-					Set_Available_Chooses(true, true, true, false);
+					Set_Available_Chooses(true, true, true, false, true);
 				}
 			});
 
@@ -168,7 +193,7 @@ public class SortGUI {
 					//The amount of time taken for selection sort took
 					selection_time_taken.setText(selectionTime / 1000 + " Seconds");
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true);
+					Set_Available_Chooses(false, false, false, true, false);
 				}
 			});
 
@@ -182,7 +207,7 @@ public class SortGUI {
 					//recursive merge sort has finished/been clicked
 					Recersive_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true);
+					Set_Available_Chooses(false, false, false, true, false);
 				}
 			});
 			
@@ -196,7 +221,21 @@ public class SortGUI {
 					//iterative merge sort has finished/been clicked
 					Iterative_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true);
+					Set_Available_Chooses(false, false, false, true, false);
+				}
+			});
+
+			qsort.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the iterative merge sort method
+					sortArea.R_Qsort();
+					//The amount of time taken for iterative merge sort took
+					qsort_time_taken.setText((qsortTime / 1000) + " Seconds");
+
+					Recursive_Quick_Done = true;
+
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, true, false);
 				}
 			});
 
@@ -211,16 +250,18 @@ public class SortGUI {
 					//There are many different combinations of what could be clicked 
 					//The following code below covers all possibilities
 					//FOr the following use the same comments as above 
-					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done) {
+					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Recursive_Quick_Done) {
 						//
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
 						Iterative_Merge_Done = false;
 						Selection_Done = false;
-						Set_Available_Chooses(false, false, false, false);
+						Recursive_Quick_Done = false;
+						Set_Available_Chooses(false, false, false, false, false);
 						selection_time_taken.setText("");
 						rmerge_time_taken.setText("");
 						imerge_time_taken.setText("");
+						qsort_time_taken.setText("");
 						
 					} else if (Recersive_Merge_Done && Iterative_Merge_Done) {
 						Set_Available_Chooses(true, false, false, false);
@@ -249,11 +290,12 @@ public class SortGUI {
 
 		//A method that sets if the button are enabled or disabled
 		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state,
-				boolean reset_state) {
+				boolean reset_state, boolean qsort_state) {
 			this.selection.setEnabled(selection_state);
 			this.rmerge.setEnabled(rmerge_state);
 			this.imerge.setEnabled(imerge_state);
 			this.reset.setEnabled(reset_state);
+			this.qsort.setEnabled(qsort_state);
 		}
 	}
 
