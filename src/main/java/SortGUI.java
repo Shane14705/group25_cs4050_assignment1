@@ -320,24 +320,26 @@ public class SortGUI {
 						imerge_time_taken.setText("");
 						qsort_time_taken.setText("");
 						
+					/* Had to add an extra parameter to the Set_Available_Chooses below, not sure if that's right but it wouldn't compile */
+
 					} else if (Recersive_Merge_Done && Iterative_Merge_Done) {
-						Set_Available_Chooses(true, false, false, false);
+						Set_Available_Chooses(true, false, false, false, false);
 
 					} else if (Selection_Done && Recersive_Merge_Done) {
 						
-						Set_Available_Chooses(false, false, true, false);
+						Set_Available_Chooses(false, false, true, false, false);
 
 					} else if (Selection_Done && Iterative_Merge_Done) {
-						Set_Available_Chooses(false, true, false, false);
+						Set_Available_Chooses(false, true, false, false, false);
 
 					} else if (Selection_Done) {
-						Set_Available_Chooses(false, true, true, false);
+						Set_Available_Chooses(false, true, true, false, false);
 
 					} else if (Recersive_Merge_Done) {
-						Set_Available_Chooses(true, false, true, false);
+						Set_Available_Chooses(true, false, true, false, false);
 
 					} else {
-						Set_Available_Chooses(true, true, false, false);
+						Set_Available_Chooses(true, true, false, false, false);
 
 					}
 				}
