@@ -140,7 +140,7 @@ public class SortShow extends JPanel {
 
 
 				//Causing a delay for 10ms
-				delay(10); 
+				delay(10);
 			}
 		}
 
@@ -201,6 +201,7 @@ public class SortShow extends JPanel {
 		//Run the recursive InsertionSort method
 		InsertionSort(0, lines_lengths.length-1);
 
+		paintComponent(this.getGraphics());
 		//End timer
 		Calendar end = Calendar.getInstance();
 		//Computing the time it took to run insertion sort
@@ -211,14 +212,16 @@ public class SortShow extends JPanel {
 	//recursive insertion sort method
 	public void InsertionSort(int first, int last)
 	{
+
 		if(first < last)
 		{
+
 			//sort all but the last element
 			InsertionSort(first, last-1);
 
 			//insert the last element in sorted order
 			InsertInOrder(lines_lengths[last], first, last-1);
-
+			paintComponent(this.getGraphics());
 			//add a delay of 10 ms
 			delay(10);
 		}
@@ -244,8 +247,6 @@ public class SortShow extends JPanel {
 				lines_lengths[end] = element;
 			}
 		}
-		//Redrawing the lines
-		paintComponent(this.getGraphics());
 	}
 
 	public void BubbleSort()
@@ -257,9 +258,12 @@ public class SortShow extends JPanel {
 		{
 			for(int j = 0; j < lines_lengths.length - i - 1; j++)
 			{
-				if(lines_lengths[j] > lines_lengths[j+1])
+				if(lines_lengths[j] > lines_lengths[j+1]) {
 					swap(j, j+1);
-				paintComponent(this.getGraphics());
+					paintComponent(this.getGraphics());
+				}
+
+
 			}
 		}
 
@@ -267,7 +271,7 @@ public class SortShow extends JPanel {
 		Calendar end = Calendar.getInstance();
 		//Computing the time it took to run insertion sort
 		//Subtract the start time from the end time
-		SortGUI.insertTime = end.getTime().getTime() - start.getTime().getTime();
+		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -352,6 +356,7 @@ public class SortShow extends JPanel {
 		if (beginLeftovers < total_number_of_lines) {
 			I_Merge(0, beginLeftovers-1, total_number_of_lines - 1);
 		}
+		paintComponent(this.getGraphics());
 		//getting the date and time when the iterative merge sort ends
 		Calendar end = Calendar.getInstance();
 		//getting the time it took for the iterative merge sort to execute 
