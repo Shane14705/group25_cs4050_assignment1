@@ -117,8 +117,8 @@ public class SortShow extends JPanel {
 			tempArray = new int[lines_lengths.length];
 			//You need to complete this part.
 			R_MergeSort(0, lines_lengths.length - 1);
-
 			Calendar end = Calendar.getInstance();
+			paintComponent(this.getGraphics());
 			//getting the time it took for the iterative merge sort to execute
 			//subtracting the end time with the start time
 	        SortGUI.rmergeTime = end.getTime().getTime() - start.getTime().getTime();
@@ -128,7 +128,7 @@ public class SortShow extends JPanel {
 		//recursive merge sort method
 		public void R_MergeSort(int first, int last){
 			if(first < last){
-
+				paintComponent(this.getGraphics());
 				//You need to complete this part.
 				int middle = (first + last) / 2;
 				R_MergeSort(first, middle);
@@ -137,6 +137,7 @@ public class SortShow extends JPanel {
 				if (lines_lengths[middle] >= lines_lengths[middle + 1]) {
 					R_Merge(first, middle, last);
 				}
+
 
 				//Causing a delay for 10ms
 				delay(10); 
@@ -188,7 +189,7 @@ public class SortShow extends JPanel {
 			}
 
 			//redrawing the lines_lengths
-			paintComponent(this.getGraphics());
+			//paintComponent(this.getGraphics());
 
 		}
 
@@ -267,6 +268,61 @@ public class SortShow extends JPanel {
 		//Computing the time it took to run insertion sort
 		//Subtract the start time from the end time
 		SortGUI.insertTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	//recursive quicksort method
+	public void R_Qsort() {
+		//getting the date and time when the recursive quick sort starts
+		Calendar start = Calendar.getInstance();
+		//assigning the size for the tempArray below
+		tempArray = new int[lines_lengths.length];
+		//You need to complete this part.
+		R_Qsort(0, lines_lengths.length - 1);
+
+		Calendar end = Calendar.getInstance();
+		paintComponent(this.getGraphics());
+		//getting the time it took for the iterative merge sort to execute
+		//subtracting the end time with the start time
+		SortGUI.qsortTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	private void R_Qsort(int first, int last) {
+
+		if (first >= last) {
+			return;
+		}
+
+		paintComponent(this.getGraphics());
+		int middle = (first + last) / 2;
+		int pivotIndex = make_partition(first, lines_lengths[middle], last);
+
+		R_Qsort(first, pivotIndex - 1);
+		R_Qsort(pivotIndex, last);
+
+	}
+
+	private int make_partition(int first, int pivot, int last) {
+		while (first <= last) {
+			//find the two indices that need to be swapped
+			while (lines_lengths[first] < pivot) {
+				first++;
+			}
+
+			while (lines_lengths[last] > pivot) {
+				last--;
+			}
+
+			if (first <= last) {
+				swap(first, last);
+				first++;
+				last--;
+			}
+
+		}
+
+		return first;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -433,22 +489,6 @@ public class SortShow extends JPanel {
 	        }
 		}
 
-	public void R_Qsort() {
-		//getting the date and time when the recursive quick sort starts
-		Calendar start = Calendar.getInstance();
-		//assigning the size for the tempArray below
-		tempArray = new int[lines_lengths.length];
-		//You need to complete this part.
-		R_Qsort(0, lines_lengths.length - 1);
 
-		Calendar end = Calendar.getInstance();
-		//getting the time it took for the iterative merge sort to execute
-		//subtracting the end time with the start time
-		SortGUI.rmergeTime = end.getTime().getTime() - start.getTime().getTime();
-	}
-
-	private void R_Qsort(int first, int last) {
-
-	}
 }
 
