@@ -26,6 +26,9 @@ public class SortGUI {
 
 	public static double qsortTime = 0.0;
 
+	//a variable that holds the amount of time the bubble sort takes to execute
+	public static double bubbleTime = 0.0;
+
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
 	//Boolean variable that is made to keep track whether or not the recursive merge sort has already been used
@@ -36,6 +39,9 @@ public class SortGUI {
 	public boolean Insertion_Done = false;
 
 	public boolean Recursive_Quick_Done = false;
+
+	//Boolean variable that is made to keep track whether or not the bubble sort has already been used
+	public boolean Bubble_Done = false;
 
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
@@ -69,6 +75,9 @@ public class SortGUI {
 
 		JRadioButton qsort = new JRadioButton("Quicksort Recursive");
 
+		//making a bubble button with text "Bubble" on it
+		JRadioButton bubble = new JRadioButton("Bubble");
+
 		//making an insertion button with text "Insertion" on it
 		JRadioButton insertion = new JRadioButton("Insertion");
 		//making a reset button with a text "Selection" on it
@@ -82,12 +91,15 @@ public class SortGUI {
 		//A label that displays the time it took for the iterative merge sort took to execute
 		JLabel imerge_time_label = new JLabel("Merge-Ita Time");
 		JLabel imerge_time_taken = new JLabel("");
-		//A label that displays the time it took for the insertion sort to execute
+
 		JLabel insert_time_label = new JLabel("Insertion Time");
 		JLabel insert_time_taken = new JLabel("");
 
 		JLabel qsort_time_label = new JLabel("Merge-Ita Time");
 		JLabel qsort_time_taken = new JLabel("");
+
+		JLabel bubble_time_label = new JLabel("Bubble Time");
+		JLabel bubble_time_taken = new JLabel("");
 	
 		//the default constructor for the class MyScreen
 		public MyScreen() {
@@ -101,6 +113,10 @@ public class SortGUI {
 
 			qsort_time_taken.setForeground(Color.RED);
 
+			insert_time_taken.setForeground(Color.RED);
+
+			bubble_time_taken.setForeground(Color.RED);
+
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
 			//The recursive merge button text will be the colour blue
@@ -109,6 +125,10 @@ public class SortGUI {
 			imerge.setForeground(Color.BLUE);
 
 			qsort.setForeground(Color.BLUE);
+
+			insertion.setForeground(Color.BLUE);
+
+			bubble.setForeground(Color.BLUE);
 
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
@@ -125,6 +145,10 @@ public class SortGUI {
 			radio_button_selection_Panel.add(imerge);
 
 			radio_button_selection_Panel.add(qsort);
+
+			radio_button_selection_Panel.add(insertion);
+
+			radio_button_selection_Panel.add(bubble);
 
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
@@ -148,6 +172,12 @@ public class SortGUI {
 
 			time_Panel.add(qsort_time_label);
 			time_Panel.add(qsort_time_taken);
+
+			time_Panel.add(insert_time_label);
+			time_Panel.add(insert_time_taken);
+
+			time_Panel.add(bubble_time_label);
+			time_Panel.add(bubble_time_taken);
 
 
 			//A Panel to hold the buttons_area_Panel and set the GridLayout
@@ -239,6 +269,33 @@ public class SortGUI {
 				}
 			});
 
+			//Creating an action listener for insertion button
+			insertion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the insertion sort method
+					sortArea.InsertionSort();
+					//The amount of time taken for insertion sort
+					insert_time_taken.setText((insertTime / 1000) + " Seconds");
+					//insertion sort has finished/been clicked
+					Insertion_Done = true;
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, true, false, false, false);
+				}
+			});
+			//Creating an action listener for bubble button
+			bubble.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the bubble sort method
+					sortArea.BubbleSort();
+					//The amount of time taken for bubble sort
+					bubble_time_taken.setText((bubbleTime / 1000) + " Seconds");
+					//insertion sort has finished/been clicked
+					Bubble_Done = true;
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, true, false, false, false);
+				}
+			});
+
 			//Creating an action listener for reset button
 			reset.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -290,12 +347,14 @@ public class SortGUI {
 
 		//A method that sets if the button are enabled or disabled
 		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state,
-				boolean reset_state, boolean qsort_state) {
+				boolean reset_state, boolean qsort_state, boolean insertion_state, boolean bubble_state) {
 			this.selection.setEnabled(selection_state);
 			this.rmerge.setEnabled(rmerge_state);
 			this.imerge.setEnabled(imerge_state);
 			this.reset.setEnabled(reset_state);
 			this.qsort.setEnabled(qsort_state);
+			this.insertion.setEnabled(insertion_state);
+			this.bubble.setEnabled(bubble_state);
 		}
 	}
 

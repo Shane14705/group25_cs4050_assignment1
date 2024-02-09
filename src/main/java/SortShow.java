@@ -242,7 +242,28 @@ public class SortShow extends JPanel {
 		//Redrawing the lines
 		paintComponent(this.getGraphics());
 	}
-		//
+
+	public void BubbleSort()
+	{
+		//Start the timer
+		Calendar start = Calendar.getInstance();
+
+		for(int i = 0; i < lines_lengths.length - 1; i++)
+		{
+			for(int j = 0; j < lines_lengths.length - i - 1; j++)
+			{
+				if(lines_lengths[j] > lines_lengths[j+1])
+					swap(j, j+1);
+				paintComponent(this.getGraphics());
+			}
+		}
+
+		//End timer
+		Calendar end = Calendar.getInstance();
+		//Computing the time it took to run insertion sort
+		//Subtract the start time from the end time
+		SortGUI.insertTime = end.getTime().getTime() - start.getTime().getTime();
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 		
