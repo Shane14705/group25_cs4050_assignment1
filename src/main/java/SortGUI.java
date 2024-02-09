@@ -135,7 +135,7 @@ public class SortGUI {
 			//setting the font of scramble button
 			scramble_button.setFont(new Font("Arial", Font.BOLD, 15));
 			//A Panel to hold the radio_button_selection and set the GridLayout
-			JPanel radio_button_selection_Panel = new JPanel(new GridLayout(5, 1, 3, 3));
+			JPanel radio_button_selection_Panel = new JPanel(new GridLayout(6, 1, 3, 3));
 
 			//Adding the selection button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(selection);
@@ -195,7 +195,8 @@ public class SortGUI {
 			//placing the sortArea object in the center of the window
 			add(sortArea, BorderLayout.CENTER);
 			//setting all booleans to false
-			Set_Available_Chooses(false, false, false, false, false);
+			Force_Reset_Only();
+			reset.setEnabled(false);
 
 			//The following code is for creating a listener for each GUI element 
 
@@ -209,7 +210,7 @@ public class SortGUI {
 					//Since it has already been clicked, it will no longer be enabled
 					scramble_button.setEnabled(false); 
 					//setting all booleans true except for reset
-					Set_Available_Chooses(true, true, true, false, true);
+					Set_Available_Chooses(false);
 				}
 			});
 
@@ -223,7 +224,7 @@ public class SortGUI {
 					//The amount of time taken for selection sort took
 					selection_time_taken.setText(selectionTime / 1000 + " Seconds");
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false);
+					Force_Reset_Only();
 				}
 			});
 
@@ -237,7 +238,7 @@ public class SortGUI {
 					//recursive merge sort has finished/been clicked
 					Recersive_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false);
+					Force_Reset_Only();
 				}
 			});
 			
@@ -251,7 +252,7 @@ public class SortGUI {
 					//iterative merge sort has finished/been clicked
 					Iterative_Merge_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false);
+					Force_Reset_Only();
 				}
 			});
 
@@ -265,7 +266,7 @@ public class SortGUI {
 					Recursive_Quick_Done = true;
 
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false);
+					Force_Reset_Only();
 				}
 			});
 
@@ -279,7 +280,7 @@ public class SortGUI {
 					//insertion sort has finished/been clicked
 					Insertion_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false, false, false);
+					Force_Reset_Only();
 				}
 			});
 			//Creating an action listener for bubble button
@@ -292,7 +293,7 @@ public class SortGUI {
 					//insertion sort has finished/been clicked
 					Bubble_Done = true;
 					//setting all booleans false except for reset
-					Set_Available_Chooses(false, false, false, true, false, false, false);
+					Force_Reset_Only();
 				}
 			});
 
@@ -306,57 +307,50 @@ public class SortGUI {
 
 					//There are many different combinations of what could be clicked 
 					//The following code below covers all possibilities
-					//FOr the following use the same comments as above 
-					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Recursive_Quick_Done) {
-						//
+					//FOr the following use the same comments as above
+
+					//If everything is done, reset the options and enable scrambling again
+					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Recursive_Quick_Done && Insertion_Done && Bubble_Done) {
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
 						Iterative_Merge_Done = false;
 						Selection_Done = false;
 						Recursive_Quick_Done = false;
-						Set_Available_Chooses(false, false, false, false, false);
+						Insertion_Done = false;
+						Bubble_Done = false;
 						selection_time_taken.setText("");
 						rmerge_time_taken.setText("");
 						imerge_time_taken.setText("");
 						qsort_time_taken.setText("");
-						
-					/* Had to add an extra parameter to the Set_Available_Chooses below, not sure if that's right but it wouldn't compile */
-
-					} else if (Recersive_Merge_Done && Iterative_Merge_Done) {
-						Set_Available_Chooses(true, false, false, false, false);
-
-					} else if (Selection_Done && Recersive_Merge_Done) {
-						
-						Set_Available_Chooses(false, false, true, false, false);
-
-					} else if (Selection_Done && Iterative_Merge_Done) {
-						Set_Available_Chooses(false, true, false, false, false);
-
-					} else if (Selection_Done) {
-						Set_Available_Chooses(false, true, true, false, false);
-
-					} else if (Recersive_Merge_Done) {
-						Set_Available_Chooses(true, false, true, false, false);
-
-					} else {
-						Set_Available_Chooses(true, true, false, false, false);
-
+						insert_time_taken.setText("");
+						bubble_time_taken.setText("");
 					}
+
+					Set_Available_Chooses(false);
 				}
 			});
 
 		}
 
 		//A method that sets if the button are enabled or disabled
-		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state,
-				boolean reset_state, boolean qsort_state, boolean insertion_state, boolean bubble_state) {
-			this.selection.setEnabled(selection_state);
-			this.rmerge.setEnabled(rmerge_state);
-			this.imerge.setEnabled(imerge_state);
+		public void Set_Available_Chooses(boolean reset_state) {
+			this.selection.setEnabled(!Selection_Done);
+			this.rmerge.setEnabled(!Recersive_Merge_Done);
+			this.imerge.setEnabled(!Iterative_Merge_Done);
 			this.reset.setEnabled(reset_state);
-			this.qsort.setEnabled(qsort_state);
-			this.insertion.setEnabled(insertion_state);
-			this.bubble.setEnabled(bubble_state);
+			this.qsort.setEnabled(!Recursive_Quick_Done);
+			this.insertion.setEnabled(!Insertion_Done);
+			this.bubble.setEnabled(!Bubble_Done);
+		}
+
+		public void Force_Reset_Only() {
+			this.selection.setEnabled(false);
+			this.rmerge.setEnabled(false);
+			this.imerge.setEnabled(false);
+			this.reset.setEnabled(true);
+			this.qsort.setEnabled(false);
+			this.insertion.setEnabled(false);
+			this.bubble.setEnabled(false);
 		}
 	}
 

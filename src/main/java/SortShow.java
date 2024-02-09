@@ -434,6 +434,20 @@ public class SortShow extends JPanel {
 		}
 
 	public void R_Qsort() {
+		//getting the date and time when the recursive quick sort starts
+		Calendar start = Calendar.getInstance();
+		//assigning the size for the tempArray below
+		tempArray = new int[lines_lengths.length];
+		//You need to complete this part.
+		R_Qsort(0, lines_lengths.length - 1);
+
+		Calendar end = Calendar.getInstance();
+		//getting the time it took for the iterative merge sort to execute
+		//subtracting the end time with the start time
+		SortGUI.rmergeTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	private void R_Qsort(int first, int last) {
 
 	}
 }
