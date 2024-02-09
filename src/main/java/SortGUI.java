@@ -26,8 +26,9 @@ public class SortGUI {
 
 	public static double qsortTime = 0.0;
 
-	//a variable that holds the amount of time the bubble sort takes to execute
 	public static double bubbleTime = 0.0;
+
+	public static double shellTime = 0.0;
 
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
@@ -40,8 +41,9 @@ public class SortGUI {
 
 	public boolean Recursive_Quick_Done = false;
 
-	//Boolean variable that is made to keep track whether or not the bubble sort has already been used
 	public boolean Bubble_Done = false;
+
+	public boolean Shell_Done = false;
 
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
@@ -80,6 +82,9 @@ public class SortGUI {
 
 		//making an insertion button with text "Insertion" on it
 		JRadioButton insertion = new JRadioButton("Insertion");
+
+		JRadioButton shell = new JRadioButton("Shell");
+
 		//making a reset button with a text "Selection" on it
 		JRadioButton reset = new JRadioButton("Reset");
 		//A label that displays the time it took for the Selection sort took to execute
@@ -100,6 +105,9 @@ public class SortGUI {
 
 		JLabel bubble_time_label = new JLabel("Bubble Time");
 		JLabel bubble_time_taken = new JLabel("");
+
+		JLabel shell_time_label = new JLabel("Shell Time");
+		JLabel shell_time_taken = new JLabel("");
 	
 		//the default constructor for the class MyScreen
 		public MyScreen() {
@@ -117,6 +125,8 @@ public class SortGUI {
 
 			bubble_time_taken.setForeground(Color.RED);
 
+			shell_time_taken.setForeground(Color.RED);
+
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
 			//The recursive merge button text will be the colour blue
@@ -129,6 +139,8 @@ public class SortGUI {
 			insertion.setForeground(Color.BLUE);
 
 			bubble.setForeground(Color.BLUE);
+
+			shell.setForeground(Color.BLUE);
 
 			//The scramble button's text will be blue
 			scramble_button.setForeground(Color.BLUE);
@@ -149,6 +161,8 @@ public class SortGUI {
 			radio_button_selection_Panel.add(insertion);
 
 			radio_button_selection_Panel.add(bubble);
+
+			radio_button_selection_Panel.add(shell);
 
 			//Adding the reset button to the radio_button_selection_Panel
 			radio_button_selection_Panel.add(reset);
@@ -179,6 +193,8 @@ public class SortGUI {
 			time_Panel.add(bubble_time_label);
 			time_Panel.add(bubble_time_taken);
 
+			time_Panel.add(shell_time_label);
+			time_Panel.add(shell_time_taken);
 
 			//A Panel to hold the buttons_area_Panel and set the GridLayout
 			//This buttons_area_Panel will hold scrambleButton, radio_button_selection and the time_Panel
@@ -290,8 +306,22 @@ public class SortGUI {
 					sortArea.BubbleSort();
 					//The amount of time taken for bubble sort
 					bubble_time_taken.setText((bubbleTime / 1000) + " Seconds");
-					//insertion sort has finished/been clicked
+					//bubble sort has finished/been clicked
 					Bubble_Done = true;
+					//setting all booleans false except for reset
+					Force_Reset_Only();
+				}
+			});
+
+			//Creating an action listener for shell button
+			shell.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the shell sort method
+					sortArea.ShellSort();
+					//The amount of time taken for shell sort
+					shell_time_taken.setText((shellTime / 1000) + " Seconds");
+					//shell sort has finished/been clicked
+					Shell_Done = true;
 					//setting all booleans false except for reset
 					Force_Reset_Only();
 				}
@@ -310,7 +340,8 @@ public class SortGUI {
 					//FOr the following use the same comments as above
 
 					//If everything is done, reset the options and enable scrambling again
-					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Recursive_Quick_Done && Insertion_Done && Bubble_Done) {
+					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Recursive_Quick_Done &&
+							Insertion_Done && Bubble_Done && Shell_Done) {
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
 						Iterative_Merge_Done = false;
@@ -318,12 +349,14 @@ public class SortGUI {
 						Recursive_Quick_Done = false;
 						Insertion_Done = false;
 						Bubble_Done = false;
+						Shell_Done = false;
 						selection_time_taken.setText("");
 						rmerge_time_taken.setText("");
 						imerge_time_taken.setText("");
 						qsort_time_taken.setText("");
 						insert_time_taken.setText("");
 						bubble_time_taken.setText("");
+						shell_time_taken.setText("");
 					}
 
 					Set_Available_Chooses(false);
@@ -341,6 +374,7 @@ public class SortGUI {
 			this.qsort.setEnabled(!Recursive_Quick_Done);
 			this.insertion.setEnabled(!Insertion_Done);
 			this.bubble.setEnabled(!Bubble_Done);
+			this.shell.setEnabled(!Shell_Done);
 		}
 
 		public void Force_Reset_Only() {
@@ -351,6 +385,7 @@ public class SortGUI {
 			this.qsort.setEnabled(false);
 			this.insertion.setEnabled(false);
 			this.bubble.setEnabled(false);
+			this.shell.setEnabled(false);
 		}
 	}
 

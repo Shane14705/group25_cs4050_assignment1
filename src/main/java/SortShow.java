@@ -274,6 +274,48 @@ public class SortShow extends JPanel {
 		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
 	}
 
+	public void ShellSort()
+	{
+		//Start the timer
+		Calendar start = Calendar.getInstance();
+
+		//Run Shell Sort
+		ShellSort(0, lines_lengths.length - 1);
+
+		//End timer
+		Calendar end = Calendar.getInstance();
+		//Computing the time it took to run insertion sort
+		//Subtract the start time from the end time
+		SortGUI.shellTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	public void ShellSort(int first, int last)
+	{
+		int n = last - first + 1;
+		for(int space = n/2; space > 0; space = space / 2)
+		{
+			for(int start = first; start < first + space; start++)
+			{
+				IncrementalInsertionSort(start, last, space);
+			}
+		}
+	}
+
+	public void IncrementalInsertionSort(int first, int last, int space)
+	{
+		int unsorted, index;
+		for(unsorted = first+space; unsorted <= last; unsorted = unsorted+space)
+		{
+			Integer firstUnsorted = lines_lengths[unsorted];
+			for (index = unsorted - space ; (index >= first) &&
+					(firstUnsorted.compareTo (lines_lengths[index]) < 0); index = index - space)
+			{
+				lines_lengths[index + space] = lines_lengths[index];
+				paintComponent(this.getGraphics());
+			}
+			lines_lengths[index + space] = firstUnsorted;
+		}
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	//recursive quicksort method
